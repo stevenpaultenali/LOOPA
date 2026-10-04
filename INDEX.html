@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>LOOPA · Use it. Share it. Keep it moving.</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F8F7F2;
+            --card: #fff;
+            --tx: #17201D;
+            --mu: #6E7975;
+            --ac: #18A673;
+            --acd: #0f7f58;
+            --mint: #DDF5EA;
+            --fo: #102A24;
+            --am: #E8B04A;
+            --ln: rgba(16, 42, 36, .09);
+            --sh: 0 1px 2px rgba(16, 42, 36, .05), 0 8px 24px rgba(16, 42, 36, .06);
+            --v1: 92%;
+            --v2: 84%;
+            --bad: #c8432f;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        :root:not([data-theme=light]) {
+            color-scheme: light dark
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme=light]) {
+                --bg: #0B1411;
+                --card: #12201B;
+                --tx: #F2F6F3;
+                --mu: #91A39B;
+                --ac: #28C58A;
+                --mint: #173a2e;
+                --ln: rgba(255, 255, 255, .08);
+                --sh: 0 8px 24px rgba(0, 0, 0, .35);
+                --v1: 20%;
+                --v2: 13%;
+                --fo: #0d1f1a
+            }
+        }
+
+        :root[data-theme=dark] {
+            --bg: #0B1411;
+            --card: #12201B;
+            --tx: #F2F6F3;
+            --mu: #91A39B;
+            --ac: #28C58A;
+            --mint: #173a2e;
+            --ln: rgba(255, 255, 255, .08);
+            --sh: 0 8px 24px rgba(0, 0, 0, .35);
+            --v1: 20%;
+            --v2: 13%;
+            --fo: #0d1f1a
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--tx);
+            font: 400 15px/1.55 Inter, system-ui, sans-serif;
+            min-height: 100%;
+            transition: background .3s
+        }
+
+        h1,
+        h2,
+        h3,
+        .hd {
+            font-family: Manrope, Inter, sans-serif;
+            letter-spacing: -.03em;
+            line-height: 1.08;
+            margin: 0
+        }
+
+        h1 {
+            font-size: clamp(2.4rem, 5.6vw, 4.4rem);
+            font-weight: 800
+        }
+
+        h2 {
+            font-size: clamp(1.6rem, 3vw, 2.3rem);
+            font-weight: 800
+        }
+
+        h3 {
+            font-size: 1.15rem;
+            font-weight: 700
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+            color: inherit
+        }
+
+        button {
+            cursor: pointer;
+            border: 1px solid var(--ln);
+            background: var(--card);
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            min-height: 44px;
+            transition: transform .2s, background .2s, box-shadow .2s
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--sh)
+        }
+
+        button.pri {
+            background: var(--ac);
+            color: #04140e;
+            border-color: transparent
+        }
+
+        button.pri:hover {
+            background: var(--acd);
+            color: #fff
+        }
+
+        button.bad {
+            color: var(--bad)
+        }
+
+        button.dk {
+            background: var(--fo);
+            color: #fff;
+            border-color: transparent
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--am);
+            outline-offset: 2px
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--ln);
+            border-radius: 14px;
+            padding: 12px 14px;
+            min-height: 46px
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            margin: 12px 0 0
+        }
+
+        label>* {
+            margin-top: 6px;
+            font-weight: 400
+        }
+
+        .mu {
+            color: var(--mu)
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px
+        }
+
+        .acts {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 12px
+        }
+
+        .wrap {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            background: color-mix(in srgb, var(--bg) 85%, transparent);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--ln);
+            padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        header .wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            height: 68px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font: 800 21px Manrope;
+            letter-spacing: -.04em;
+            cursor: pointer;
+            background: none;
+            border: 0;
+            padding: 0;
+            box-shadow: none !important;
+            transform: none !important
+        }
+
+        nav {
+            display: flex;
+            gap: 2px;
+            margin: 0 auto
+        }
+
+        nav button {
+            border: 0;
+            background: none;
+            color: var(--mu);
+            position: relative
+        }
+
+        nav button.on,
+        nav button:hover {
+            color: var(--tx);
+            background: var(--mint);
+            box-shadow: none
+        }
+
+        .ib {
+            width: 44px;
+            padding: 0;
+            display: grid;
+            place-items: center;
+            position: relative
+        }
+
+        .dot {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            background: var(--am);
+            color: #000;
+            font-size: 10px;
+            border-radius: 99px;
+            min-width: 17px;
+            height: 17px;
+            display: grid;
+            place-items: center;
+            font-weight: 700
+        }
+
+        .av {
+            display: inline-grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font: 700 12px Manrope;
+            color: #fff;
+            background: hsl(var(--h) 45% 38%);
+            flex: none
+        }
+
+        .av.l {
+            width: 84px;
+            height: 84px;
+            font-size: 30px
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 99px;
+            background: var(--mint);
+            color: var(--acd)
+        }
+
+        
+
+        .tag.no {
+            background: rgba(200, 67, 47, .12);
+            color: var(--bad)
+        }
+
+        .tag.wait {
+            background: rgba(232, 176, 74, .2);
+            color: #9a6b0c
+        }
+
+        .tag.act {
+            background: var(--fo);
+            color: #fff
+        }
+
+        main {
+            padding: 28px 0 110px
+        }
+
+        section {
+            margin: 56px 0
+        }
+
+        .sec {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 12px;
+            margin-bottom: 20px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 22px;
+            box-shadow: var(--sh);
+            border: 1px solid var(--ln);
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s
+        }
+
+        .item {
+            cursor: pointer
+        }
+
+        .item:hover {
+            transform: translateY(-4px)
+        }
+
+        .vis {
+            aspect-ratio: 4/3;
+            display: grid;
+            place-items: center;
+            font-size: 76px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, hsl(var(--h) 50% var(--v1)), hsl(var(--h) 45% var(--v2)))
+        }
+
+        .vis img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .5s
+        }
+
+        .item:hover .vis img,
+        .item:hover .vis>span {
+            transform: scale(1.05)
+        }
+
+        .vis>span {
+            transition: transform .5s
+        }
+
+        .vis .tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--card);
+            color: var(--tx)
+        }
+
+        .vis .tr {
+            left: auto;
+            right: 12px
+        }
+
+        .cb {
+            padding: 16px 18px 18px
+        }
+
+        .pr {
+            font: 800 18px Manrope
+        }
+
+        .sw {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ac);
+            box-shadow: 0 0 0 3px var(--mint)
+        }
+
+        .sw.o {
+            background: var(--mu);
+            box-shadow: none
+        }
+
+        .loopbadge {
+            display: inline-flex;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--acd);
+            background: var(--mint);
+            padding: 3px 10px;
+            border-radius: 99px;
+            margin-top: 8px
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 30px;
+            align-items: center;
+            background: var(--fo);
+            color: #F2F6F3;
+            border-radius: 32px;
+            padding: 56px;
+            overflow: hidden;
+            position: relative
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: #b9cdc4;
+            max-width: 30em;
+            margin: 20px 0 0
+        }
+
+        .hero h1 em {
+            font-style: normal;
+            color: var(--ac)
+        }
+
+        .hero button {
+            border-color: rgba(255, 255, 255, .2);
+            background: transparent;
+            color: #fff
+        }
+
+        .hero .pri {
+            background: var(--ac);
+            color: #04140e
+        }
+
+        .loop {
+            position: relative;
+            width: min(100%, 430px);
+            aspect-ratio: 1;
+            margin: auto
+        }
+
+        .loop svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .ring {
+            transform-origin: 50% 50%;
+            animation: spin 60s linear infinite
+        }
+
+        .nd {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, .08);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 99px;
+            padding: 6px 14px;
+            font: 700 11px Manrope;
+            letter-spacing: .08em;
+            white-space: nowrap;
+            backdrop-filter: blur(6px)
+        }
+
+        .nd.hl {
+            background: var(--ac);
+            color: #04140e;
+            border: 0
+        }
+
+        .fl {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            background: var(--card);
+            color: var(--tx);
+            border-radius: 16px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+            animation: fl 5s ease-in-out infinite;
+            display: flex;
+            gap: 6px;
+            align-items: center
+        }
+
+        .ctr {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-content: center;
+            text-align: center;
+            font: 800 26px Manrope
+        }
+
+        .ctr small {
+            font: 500 12px Inter;
+            color: #9fb8ad
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes fl {
+            50% {
+                margin-top: -9px
+            }
+        }
+
+        @keyframes scan {
+
+            0%,
+            100% {
+                top: 6%
+            }
+
+            50% {
+                top: 90%
+            }
+        }
+
+        .chips {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 0 8px;
+            scrollbar-width: none
+        }
+
+        .chips button {
+            flex: none
+        }
+
+        .chips button.on {
+            background: var(--fo);
+            color: #fff
+        }
+
+        .filt {
+            display: grid;
+            grid-template-columns: 2fr repeat(5, 1fr);
+            gap: 10px;
+            margin: 16px 0
+        }
+
+        .search {
+            position: relative
+        }
+
+        .search input {
+            padding-left: 46px;
+            min-height: 58px;
+            font-size: 1.05rem;
+            border-radius: 20px
+        }
+
+        .search svg {
+            position: absolute;
+            left: 16px;
+            top: 19px;
+            color: var(--mu)
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            position: relative
+        }
+
+        .st {
+            padding: 24px;
+            border-radius: 22px;
+            background: var(--card);
+            border: 1px solid var(--ln);
+            box-shadow: var(--sh)
+        }
+
+        .st b {
+            font: 800 40px Manrope;
+            color: var(--ac);
+            display: block
+        }
+
+        .st h3 {
+            margin: 6px 0
+        }
+
+        .dark {
+            background: var(--fo);
+            color: #F2F6F3;
+            border-radius: 32px;
+            padding: 48px
+        }
+
+        .dark .mu {
+            color: #9fb8ad
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 24px
+        }
+
+        .stats>div {
+            padding: 20px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .06)
+        }
+
+        .stats b {
+            font: 800 clamp(1.8rem, 3.5vw, 2.8rem) Manrope;
+            display: block
+        }
+
+        .pl {
+            background: var(--card);
+            border: 1px solid var(--ln);
+            border-radius: 22px;
+            padding: 22px;
+            box-shadow: var(--sh);
+            margin-bottom: 14px
+        }
+
+        .cols {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px
+        }
+
+        .jr {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            align-items: center;
+            margin: 10px 0
+        }
+
+        .jr span {
+            padding: 5px 12px;
+            border-radius: 99px;
+            background: var(--mint);
+            color: var(--acd);
+            font-weight: 600;
+            font-size: 13px
+        }
+
+        .jr i {
+            color: var(--mu);
+            font-style: normal
+        }
+
+        .dt {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 36px
+        }
+
+        .dt .vis {
+            border-radius: 28px;
+            aspect-ratio: 1;
+            font-size: 150px
+        }
+
+        .pf {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 30px;
+            align-items: start
+        }
+
+        .stp {
+            display: flex;
+            gap: 8px;
+            margin: 18px 0
+        }
+
+        .stp div {
+            flex: 1;
+            padding: 10px;
+            border-radius: 14px;
+            border: 1px solid var(--ln);
+            font: 700 13px Manrope;
+            color: var(--mu)
+        }
+
+        .stp .on {
+            background: var(--fo);
+            color: #fff
+        }
+
+        .err {
+            color: var(--bad);
+            font-size: 13px;
+            min-height: 18px;
+            margin-top: 6px
+        }
+
+        .ex {
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 30px 0
+        }
+
+        .glass {
+            position: relative;
+            width: min(100%, 360px);
+            padding: 28px;
+            border-radius: 28px;
+            background: linear-gradient(160deg, color-mix(in srgb, var(--ac) 18%, var(--card)), var(--card));
+            border: 1px solid var(--ln);
+            box-shadow: var(--sh);
+            backdrop-filter: blur(10px)
+        }
+
+        #qr {
+            display: flex;
+            justify-content: center;
+            padding: 14px;
+            background: #fff;
+            border-radius: 18px;
+            position: relative;
+            margin: 16px 0;
+            overflow: hidden
+        }
+
+        .scn {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--ac);
+            box-shadow: 0 0 14px var(--ac);
+            animation: scan 2.4s ease-in-out infinite
+        }
+
+        .chat {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 18px;
+            min-height: 520px
+        }
+
+        .cl button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            border-radius: 16px;
+            margin-bottom: 8px
+        }
+
+        .cl button.on {
+            background: var(--mint)
+        }
+
+        .msgs {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 48vh;
+            overflow: auto;
+            padding: 12px 0
+        }
+
+        .msg {
+            max-width: 78%;
+            padding: 9px 14px;
+            border-radius: 18px;
+            background: var(--mint);
+            align-self: flex-start
+        }
+
+        .msg.me {
+            background: var(--fo);
+            color: #fff;
+            align-self: flex-end
+        }
+
+        .msg small {
+            display: block;
+            opacity: .7;
+            font-size: 11px
+        }
+
+        .msg.sys {
+            align-self: center;
+            background: none;
+            color: var(--acd);
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .banner {
+            background: rgba(232, 176, 74, .18);
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            font-weight: 500
+        }
+
+        .ov {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 15, 11, .55);
+            display: grid;
+            place-items: center;
+            z-index: 50;
+            padding: 16px;
+            animation: fi .2s
+        }
+
+        .mb {
+            background: var(--card);
+            border-radius: 26px;
+            padding: 26px;
+            width: min(480px, 100%);
+            max-height: 90vh;
+            overflow: auto;
+            animation: up .25s
+        }
+
+        @keyframes fi {
+            from {
+                opacity: 0
+            }
+        }
+
+        @keyframes up {
+            from {
+                transform: translateY(16px);
+                opacity: 0
+            }
+        }
+
+        #toast {
+            position: fixed;
+            left: 50%;
+            bottom: 90px;
+            transform: translate(-50%, 20px);
+            background: var(--fo);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 99px;
+            opacity: 0;
+            pointer-events: none;
+            transition: .3s;
+            z-index: 60;
+            max-width: 90vw
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0)
+        }
+
+        .bn {
+            display: none
+        }
+
+        .sk {
+            background: linear-gradient(90deg, var(--ln), transparent, var(--ln));
+            background-size: 200%;
+            animation: sh 1.2s infinite;
+            border-radius: 22px;
+            height: 300px
+        }
+
+        @keyframes sh {
+            to {
+                background-position: -200% 0
+            }
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: .6s
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: none
+        }
+
+        .login {
+            max-width: 440px;
+            margin: 8vh auto;
+            padding: 20px;
+            display: grid;
+            gap: 10px;
+            text-align: center
+        }
+
+        .login .loop {
+            width: 200px
+        }
+
+        @media(max-width:960px) {
+
+            nav,
+            header .cta {
+                display: none
+            }
+
+            .hero,
+            .dt,
+            .pf {
+                grid-template-columns: 1fr
+            }
+
+            .hero {
+                padding: 34px 24px
+            }
+
+            .filt {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .search {
+                grid-column: 1/-1
+            }
+
+            .steps,
+            .stats {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .cols {
+                grid-template-columns: 1fr
+            }
+
+            .chat {
+                grid-template-columns: 1fr
+            }
+
+            .dark {
+                padding: 28px 20px
+            }
+        }
+
+        @media(max-width:760px) {
+            .bn {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 30;
+                background: var(--card);
+                border-top: 1px solid var(--ln);
+                padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px))
+            }
+
+            .bn button {
+                flex: 1;
+                border: 0;
+                background: none;
+                display: grid;
+                justify-items: center;
+                gap: 2px;
+                font-size: 11px;
+                padding: 6px 0;
+                color: var(--mu);
+                border-radius: 14px;
+                box-shadow: none
+            }
+
+            .bn .on {
+                color: var(--ac)
+            }
+
+            .rail {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                margin: 0 -20px;
+                padding: 0 20px 8px
+            }
+
+            .rail>* {
+                flex: 0 0 78%;
+                scroll-snap-align: start
+            }
+
+            .steps,
+            .stats {
+                grid-template-columns: 1fr
+            }
+
+            .sec {
+                flex-direction: column;
+                align-items: start
+            }
+
+            .stick {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 64px;
+                background: var(--bg);
+                padding: 10px 16px;
+                z-index: 25;
+                border-top: 1px solid var(--ln)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation: none !important;
+                transition: none !important;
+                scroll-behavior: auto !important
+            }
+
+            .rv {
+                opacity: 1;
+                transform: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+    <div id="modal"></div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script>
+        const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)], K = 'rentreuse_v1', DAY = 864e5;
+        const CATS = {Books: '📚', Electronics: '🔌', Tools: '🔧', Sports: '⚽', Study: '🎓', Travel: '🧳', Home: '🏠', Calculators: '🧮', Other: '🎒'}, HUE = {Books: 28, Electronics: 165, Tools: 38, Sports: 150, Study: 260, Travel: 200, Home: 12, Calculators: 210, Other: 90};
+        const SPOTS = ['Library main gate', 'Canteen entrance', 'Admin block lobby', 'Security desk (main gate)', 'Sports complex reception'];
+        const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+        function seed() {
+            const users = [['u1', 'Asha', 1, 2], ['u2', 'Ravi', 1, 5], ['u3', 'Meera', 1, 4], ['u4', 'Kiran', 0, 1]].map(([id, name, v, done]) => ({id, name, v, done}));
+            const items = [['Engineering Mathematics textbook', 'Books', 'B.S. Grewal, 44th edition. Clean copy with a few highlights.', 0, 1, '📘', 'u2', 0.8], ['Casio fx-991EX calculator', 'Calculators', 'Scientific calculator in perfect working order. Great for exams.', 15, 0, '🧮', 'u3', 1.2], ['Cordless drill kit', 'Tools', '18V drill with two batteries and a bit set.', 60, 1, '🔧', 'u2', 2.5], ['Arduino Uno starter kit', 'Electronics', 'Board, breadboard, sensors and jumper wires.', 40, 1, '🔌', 'u4', 3.1], ['Badminton rackets (pair)', 'Sports', 'Two rackets and three shuttles.', 20, 1, '🏸', 'u3', 0.5], ['Digital multimeter', 'Tools', 'Auto-ranging, with probes.', 25, 0, '📟', 'u4', 4.2], ['Data structures notes and CLRS book', 'Books', 'Handwritten notes with the CLRS textbook.', 0, 1, '📗', 'u1', 1], ['Bluetooth speaker', 'Electronics', 'Waterproof, 12-hour battery.', 30, 1, '🔊', 'u1', 1], ['TI-84 graphing calculator', 'Calculators', 'Includes cable and cover.', 35, 1, '🧮', 'u2', 2], ['Camping tent (3 person)', 'Sports', 'Pop-up tent with carry bag.', 80, 1, '⛺', 'u3', 5.4]].map((a, n) => ({id: 'i' + (n + 1), name: a[0], cat: a[1], desc: a[2], price: a[3], avail: a[4], photo: a[5], owner: a[6], dist: a[7]}));
+            const reviews = [{about: 'u2', by: 'u3', s: 5, t: 'Book was in great shape, quick handover.'}, {about: 'u3', by: 'u2', s: 4, t: 'Calculator worked well.'}, {about: 'u4', by: 'u1', s: 3, t: 'Return was a day late.'}, {about: 'u1', by: 'u2', s: 5, t: 'Very reliable.'}];
+            const reqs = [{id: 'r0', item: 'i2', from: 'u1', to: 'u3', days: 3, st: 'accepted', due: Date.now() + DAY * .8, msgs: [{u: 'u1', t: 'Hi! Could I borrow the calculator for 3 days?'}, {u: 'u3', t: 'Sure, pick it up at the library gate.'}], rated: []}, {id: 'r1', item: 'i8', from: 'u2', to: 'u1', days: 2, st: 'pending', msgs: [{u: 'u2', t: 'Hi Asha, can I rent your speaker for 2 days?'}], rated: []}];
+            return {me: null, users, items, reviews, reqs, reports: [], base: 120}
+        }
+        let S; try {S = JSON.parse(localStorage.getItem(K))} catch (e) { } if (!S) S = seed();
+        if (S.v !== 2) {const w = {i1: 'Scientific calculator', i2: 'Engineering textbook', i9: 'Engineering textbook'}; S.items.forEach(i => {if (i.swap === undefined && w[i.id]) {i.swap = 1; i.want = w[i.id]} }); S.v = 2}
+        const save = () => {try {localStorage.setItem(K, JSON.stringify(S))} catch (e) {toast('Storage is full, so this change will not persist.')} };
+        let view = 'home', tab = 'in', F = {q: '', cat: '', max: '', av: '', sort: '', km: '', rt: ''}, chatId = null, cur = null, qt = 'handover', P0 = () => ({step: 0, n: '', c: 'Books', d: '', p: 0, a: '1', area: SPOTS[0], swap: 0, want: '', photo: null}), P = P0(), theme;
+        try {theme = localStorage.getItem('loopa_theme')} catch (e) { } if (theme) document.documentElement.dataset.theme = theme;
+        const me = () => S.users.find(u => u.id === S.me), usr = id => S.users.find(u => u.id === id), itm = id => S.items.find(i => i.id === id), req = id => S.reqs.find(r => r.id === id);
+        const rating = id => {const r = S.reviews.filter(x => x.about === id); return r.length ? r.reduce((a, b) => a + b.s, 0) / r.length : 0};
+        const trust = id => {const u = usr(id); return Math.min(100, Math.round(30 + (u.v ? 20 : 0) + u.done * 5 + rating(id) * 6))};
+        const price = i => i.price ? `₹${i.price}/day` : 'Free';
+        const stars = n => n ? '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n)) : 'No ratings yet';
+        const left = r => Math.ceil((r.due - Date.now()) / DAY), eco = () => S.base + S.reqs.filter(r => ['accepted', 'returned'].includes(r.st)).length;
+        const hue = s => [...String(s)].reduce((a, c) => a + c.charCodeAt(0) * 7, 0) % 360, AV = (u, c = '') => `<span class="av ${c}" style="--h:${hue(u.id)}" aria-hidden="true">${esc(u.name[0].toUpperCase())}</span>`;
+        const rid = r => 'RR-' + (2048 + S.reqs.indexOf(r));
+        const doReturn = r => {r.st = 'returned'; itm(r.item).avail = 1; if (r.offer && itm(r.offer)) itm(r.offer).avail = 1; usr(r.from).done++; usr(r.to).done++};
+        const vis = (i, x = '') => {const im = i.photo.startsWith('data:'); return `<div class="vis" style="--h:${HUE[i.cat] || 90}" role="img" aria-label="${esc(i.name)}">${im ? `<img src="${i.photo}" alt="">` : `<span aria-hidden="true">${i.photo}</span>`}${x}</div>`};
+        const avTag = i => `<span class="tag ${i.avail ? '' : 'no'}"><i class="sw ${i.avail ? '' : 'o'}"></i>${i.avail ? 'Available now' : 'Unavailable'}</span>`;
+        const vTag = u => u.v ? '<span class="tag">✓ Verified</span>' : '<span class="tag no">Not verified</span>';
+        const ic = {s: '<path d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.3-4.3"/>', b: '<path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/>', h: '<path d="M3 11l9-8 9 8M5 10v10h14V10"/>', d: '<circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-4 0 2-6z"/>', r: '<path d="M4 4h16v12H8l-4 4zM8 9h8"/>', m: '<path d="M21 12a8 8 0 01-12 7l-5 1 1-5a8 8 0 1116-3z"/>', u: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>', t: '<path d="M21 13A9 9 0 1111 3a7 7 0 0010 10z"/>'};
+        const I = (k, z = 20) => `<svg width="${z}" height="${z}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ic[k]}</svg>`;
+        const mark = `<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="var(--ac)" stroke-width="4" stroke-dasharray="52 17" stroke-linecap="round"/><circle cx="26" cy="9" r="3.5" fill="var(--am)"/></svg>`;
+        function toast(t) {const e = $('#toast'); e.textContent = t; e.className = 'show'; clearTimeout(toast.t); toast.t = setTimeout(() => e.className = '', 2600)}
+        let lastFocus; function modal(h) {lastFocus = document.activeElement; $('#modal').innerHTML = `<div class="ov" data-act="ovc"><div class="mb" role="dialog" aria-modal="true">${h}</div></div>`; const f = $('#modal').querySelector('input,select,textarea,button'); f && f.focus()}
+        const closeM = () => {$('#modal').innerHTML = ''; lastFocus && lastFocus.focus && lastFocus.focus()};
+        const conf = (t, p, act, id, l) => modal(`<h3>${t}</h3><p class="mu">${p}</p><div class="acts"><button class="${act === 'reject' ? 'bad' : 'pri'}" data-act="${act}" data-id="${id}">${l}</button><button data-act="close">Cancel</button></div>`);
+        // Reuse journey: who has used this item so far
+        const jour = i => {const l = S.reqs.filter(r => r.item === i.id && ['accepted', 'returned'].includes(r.st)); return {names: l.map(r => usr(r.from).name), n: l.length, days: l.reduce((a, r) => a + r.days, 0)}};
+        const journeyHtml = i => {const j = jour(i), o = usr(i.owner).name; return `<div class="jr"><span>${esc(o)}</span>${j.names.map(n => `<i>→</i><span>${esc(n)}</span>`).join('')}<i>→</i><span style="background:var(--am);color:#2a1d00">Next: you?</span></div><div class="mu">${j.n ? `This ${esc(i.name.split(' ').slice(0, 2).join(' '))} has already helped ${j.n} ${j.n > 1 ? 'people' : 'person'}.` : 'No one has used this yet. Start its journey.'}</div>`};
+        const loopB = i => {const j = jour(i); return j.n ? `<span class="loopbadge">↻ ${j.n} ${j.n > 1 ? 'lives' : 'life'} · ${j.days} days reused</span>` : '<span class="loopbadge">↻ New to the loop</span>'};
+        const card = i => `<div class="card item rv" data-act="open" data-id="${i.id}" tabindex="0" role="button" aria-label="${esc(i.name)}, ${price(i)}">${vis(i, `${usr(i.owner).v ? '<span class="tag tr">✓ Trusted</span>' : ''}`)}<div class="cb"><div class="mu" style="font-size:13px">${esc(i.cat)} · ${i.dist} km</div><div class="row" style="align-items:start"><b class="hd" style="font-size:17px;letter-spacing:-.02em">${esc(i.name)}</b><span class="pr">${price(i)}</span></div><div class="row" style="margin-top:12px"><span style="display:flex;gap:8px;align-items:center">${AV(usr(i.owner))}<span class="mu" style="font-size:13px">${rating(i.owner) ? '★ ' + rating(i.owner).toFixed(1) : 'New'} · ${esc(usr(i.owner).name)}</span></span>${avTag(i)}</div>${loopB(i)}${i.swap ? ' <span class="loopbadge" style="background:var(--am);color:#2a1d00">⇄ Open to swap</span>' : ''}</div></div>`;
+        const opt = (v, l, c) => `<option value="${v}"${String(c) === String(v) ? ' selected' : ''}>${l}</option>`;
+        const banners = () => {const m = me(); return S.reqs.filter(r => r.st === 'accepted' && (r.from === m.id || r.to === m.id) && left(r) <= 2).map(r => {const n = left(r), w = n < 0 ? 'is overdue' : n === 0 ? 'is due today' : n === 1 ? 'is due tomorrow' : 'is due in 2 days'; return `<div class="banner" role="alert">⏰ "${esc(itm(r.item).name)}" ${w}. ${r.from === m.id ? 'Return it to ' + esc(usr(r.to).name) : esc(usr(r.from).name) + ' should return it'}.</div>`}).join('')};
+        function reqForm(i) {
+            const mine = S.items.filter(x => x.owner === S.me && x.avail);
+            return `<label>How many days?<input id="days" type="number" min="1" max="30" value="3"></label><label>Safe pickup point<select id="spot">${SPOTS.map(x => opt(x, x, i.area || SPOTS[0])).join('')}</select></label>${i.swap ? `<label>How would you like to get it?<select id="offer"><option value="">${i.price ? 'Pay ' + price(i) : 'Borrow for free'}</option>${mine.map(x => `<option value="${x.id}">Exchange for my ${esc(x.name)}</option>`).join('')}</select></label><div class="mu" style="font-size:13px;margin-top:6px">${i.want ? 'Owner is looking for: ' + esc(i.want) + '. ' : ''}${mine.length ? '' : 'List an available item of your own to offer an exchange.'}</div>` : ''}<div class="acts"><button class="pri" data-act="request" data-id="${i.id}">${i.price ? 'Request to rent' : 'Request to borrow'}</button><button data-act="ask" data-id="${i.id}">Ask owner</button></div>`
+        }
+        function recs() {const m = me(), cats = new Set(S.reqs.filter(r => r.from === m.id).map(r => itm(r.item).cat)); return S.items.filter(i => i.owner !== m.id && i.avail).map(i => [i, (cats.has(i.cat) ? 3 : 0) + (i.dist < 2 ? 2 : 0) + rating(i.owner) / 5]).sort((a, b) => b[1] - a[1]).slice(0, 4).map(x => x[0])}
+        const ringSvg = t => `<svg width="150" height="150" viewBox="0 0 120 120" role="img" aria-label="Trust score ${t} out of 100"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--ln)" stroke-width="9"/><circle class="rg" data-t="${t}" cx="60" cy="60" r="52" fill="none" stroke="var(--ac)" stroke-width="9" stroke-linecap="round" stroke-dasharray="327" stroke-dashoffset="327" transform="rotate(-90 60 60)" style="transition:stroke-dashoffset 1.2s ease"/><text x="60" y="64" text-anchor="middle" font-family="Manrope" font-weight="800" font-size="30" fill="currentColor">${t}</text><text x="60" y="82" text-anchor="middle" font-size="9" fill="var(--mu)">TRUST SCORE</text></svg>`;
+        const N = (n, s = '') => `<b data-n="${n}" data-s="${s}">0${s}</b>`;
+        function loopVis() {
+            const nodes = ['OWNER', 'SHARE', 'BORROW', 'RETURN', 'NEXT PERSON'], it = [['📷', 'Camera'], ['🔧', 'Drill'], ['🧮', 'Calculator'], ['⛺', 'Tent'], ['📚', 'Books'], ['🔊', 'Speaker']];
+            const pos = (k, n, r) => {const a = -Math.PI / 2 + k * 2 * Math.PI / n; return `left:${50 + r * Math.cos(a)}%;top:${50 + r * Math.sin(a)}%`};
+            return `<div class="loop" role="img" aria-label="The Reuse Loop: owner, share, borrow, return, next person"><svg viewBox="0 0 100 100"><g class="ring"><circle cx="50" cy="50" r="30" fill="none" stroke="#28C58A" stroke-width=".6" stroke-dasharray="2 2.5"/><path d="M50 20l3 -2.5-3 -2.5" fill="none" stroke="#E8B04A" stroke-width=".8"/></g></svg><div class="ctr">LOOPA<small>↻ keep it moving</small></div>${nodes.map((n, k) => `<span class="nd ${k == 4 ? 'hl' : ''}" style="${pos(k, 5, 30)}">${n}</span>`).join('')}${it.map((x, k) => `<span class="fl" style="${pos(k, 6, 46)};animation-delay:${k * .7}s">${x[0]} ${x[1]}</span>`).join('')}</div>`
+        }
+        function login() {$('#app').innerHTML = `<div class="login"><div class="logo" style="justify-content:center">${mark}LOOPA</div><h1 style="font-size:2.2rem">Use it. Share it. Keep it moving.</h1><p class="mu">Pick a demo account or create your own to continue.</p>${S.users.map(u => `<button data-act="login" data-id="${u.id}">Continue as ${esc(u.name)} ${u.v ? '✓' : ''}</button>`).join('')}<input id="nn" placeholder="Your name" aria-label="Your name" maxlength="40"><button class="pri" data-act="newuser">Create account</button></div>`}
+        const views = {
+            home() {
+                const m = me(), used = eco(), cats = Object.keys(CATS), tr = cats.map(c => [c, S.reqs.filter(r => itm(r.item).cat === c).length + S.items.filter(i => i.cat === c).length]).sort((a, b) => b[1] - a[1]).slice(0, 4), vc = S.users.filter(u => u.v).length, ar = S.reviews.length ? S.reviews.reduce((a, b) => a + b.s, 0) / S.reviews.length : 0;
+                return `<div class="wrap">${banners()}<div class="hero"><div><span class="tag" style="background:rgba(40,197,138,.15);color:#7fe5bb">Community reuse marketplace</span><h1 style="margin-top:18px">Why buy something <em>you only need once?</em></h1><p>Borrow what you need. Share what you own. Keep useful things moving through the community.</p><div class="acts" style="margin-top:28px"><button class="pri" data-act="nav" data-v="browse">Explore items</button><button data-act="nav" data-v="post">Share an item</button></div></div>${loopVis()}</div>
+ <div class="chips" style="margin-top:24px">${cats.map(c => `<button data-act="cat" data-c="${c}">${CATS[c]} ${c}</button>`).join('')}</div>
+ <section class="rv"><div class="sec"><div><h2>Popular near you</h2><p class="mu" style="margin:6px 0 0">Picked from what you've requested and what's close.</p></div><button data-act="nav" data-v="browse">See all →</button></div><div class="grid rail">${recs().map(card).join('')}</div></section>
+ <section class="rv"><h2 style="margin-bottom:20px">Recently shared</h2><div class="grid rail">${S.items.slice(-4).reverse().map(card).join('')}</div></section>
+ <section class="rv"><h2 style="margin-bottom:20px">Trending categories</h2><div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">${tr.map(([c, n]) => `<button class="pl" style="text-align:left;border-radius:22px" data-act="cat" data-c="${c}"><span style="font-size:34px">${CATS[c]}</span><div class="hd" style="font-size:18px;margin-top:8px">${c}</div><div class="mu">${n} listings & requests</div></button>`).join('')}</div></section>
+ <section class="rv" id="how"><h2 style="margin-bottom:20px">How LOOPA works</h2><div class="steps">${[['Find', 'Discover something nearby.'], ['Request', 'Send a borrowing or rental request.'], ['Exchange', 'Meet and verify the handover.'], ['Return', 'Return it and keep the loop moving.']].map((s, k) => `<div class="st"><b>0${k + 1}</b><h3>${s[0]}</h3><span class="mu">${s[1]}</span></div>`).join('')}</div></section>
+ <section class="rv"><h2 style="margin-bottom:20px">Why people use LOOPA</h2><div class="cols">${[['The Reuse Loop', 'Every item has a visible journey, so you see the lives it has helped.'], ['Trust you can read', 'Verified profiles, trust scores and reviews on every listing.'], ['Secure exchange', 'QR-confirmed handovers and in-app messages. No off-platform guessing.']].map(x => `<div class="pl"><h3>${x[0]}</h3><p class="mu" style="margin-bottom:0">${x[1]}</p></div>`).join('')}</div></section>
+ <section class="rv"><div class="pl" style="display:flex;gap:30px;align-items:center;flex-wrap:wrap"><div><h2>Community trust</h2><p class="mu">Every exchange is rated by both sides.</p></div><div class="acts" style="margin:0 0 0 auto;gap:30px"><div><div class="hd" style="font-size:2rem">${vc}/${S.users.length}</div><span class="mu">verified members</span></div><div><div class="hd" style="font-size:2rem">★ ${ar.toFixed(1)}</div><span class="mu">community rating</span></div></div></div></section>
+ <section class="dark rv"><h2>Reuse impact</h2><p class="mu">Estimates based on items reused instead of bought new.</p><div class="stats"><div>${N(used)}<span class="mu">items reused</span></div><div>${N(S.reqs.filter(r => r.st === 'returned').length + 27)}<span class="mu">successful exchanges</span></div><div>${N(Math.round(used * 2.5), ' kg')}<span class="mu">est. material/CO₂ avoided</span></div><div>${N(used * 70, '')}<span class="mu">est. ₹ saved</span></div></div></section>
+ <section class="rv" style="text-align:center"><h2>Got something sitting unused?</h2><p class="mu">Give it another life in the loop.</p><button class="pri" data-act="nav" data-v="post">+ Share an item</button></section></div>`},
+            browse() {
+                const rc = Object.keys(CATS); return `<div class="wrap"><h1 style="font-size:clamp(2rem,4vw,3rem)">Find something useful nearby.</h1><p class="mu">Thousands of useful things are waiting to be reused.</p><div class="search"><span aria-hidden="true">${I('s')}</span><input data-f="q" value="${esc(F.q)}" placeholder="Search for cameras, tools, books, electronics…" aria-label="Search items"></div><div class="chips" role="group" aria-label="Categories"><button class="${F.cat ? '' : 'on'}" data-act="fc" data-c="">All</button>${rc.map(c => `<button class="${F.cat === c ? 'on' : ''}" data-act="fc" data-c="${c}">${c}</button>`).join('')}</div>
+ <div class="filt" style="grid-template-columns:repeat(5,1fr)"><select data-f="km" aria-label="Distance">${opt('', 'Any distance', F.km)}${opt('1', 'Within 1 km', F.km)}${opt('3', 'Within 3 km', F.km)}${opt('5', 'Within 5 km', F.km)}</select><select data-f="max" aria-label="Price">${opt('', 'Any price', F.max)}${opt('0', 'Free only', F.max)}${opt('swap', 'Open to exchange', F.max)}${opt('25', 'Up to ₹25/day', F.max)}${opt('50', 'Up to ₹50/day', F.max)}${opt('100', 'Up to ₹100/day', F.max)}</select><select data-f="av" aria-label="Availability">${opt('', 'Any availability', F.av)}${opt('1', 'Available', F.av)}${opt('0', 'Unavailable', F.av)}</select><select data-f="rt" aria-label="Rating">${opt('', 'Any rating', F.rt)}${opt('4', '4★ and up', F.rt)}${opt('3', '3★ and up', F.rt)}</select><select data-f="sort" aria-label="Sort">${opt('', 'Newest first', F.sort)}${opt('near', 'Nearest first', F.sort)}</select></div><div id="grid" class="grid" aria-live="polite"></div></div>`
+            },
+            item() {
+                const i = itm(cur); if (!i) return views.browse(); const o = usr(i.owner), own = i.owner === me().id, rv = S.reviews.filter(r => r.about === o.id).slice(-5), rt = rating(o.id);
+                return `<div class="wrap"><button data-act="nav" data-v="browse">← Back</button><div class="dt" style="margin-top:16px">${vis(i)}<div><span class="mu">${esc(i.cat)} · ${i.dist} km away</span><h1 style="font-size:clamp(2rem,4vw,3rem);margin:6px 0 10px">${esc(i.name)}</h1><div>${rt ? `<b style="color:var(--am)">${stars(rt)}</b> ${rt.toFixed(1)} · ${rv.length} review${rv.length == 1 ? '' : 's'}` : '<span class="mu">No reviews yet</span>'}</div><div class="pr" style="font-size:2rem;margin:12px 0">${price(i)}</div>${avTag(i)} ${loopB(i)}
+ <div class="pl" style="margin-top:18px"><div class="row"><span style="display:flex;gap:10px;align-items:center">${AV(o)}<b>${esc(o.name)}</b> ${vTag(o)}</span><span class="tag">Trust ${trust(o.id)}</span></div></div>
+ <div class="${own ? '' : 'stick'}">${own ? `<button data-act="toggle" data-id="${i.id}">Mark as ${i.avail ? 'unavailable' : 'available'}</button>` : i.avail ? `${reqForm(i)}` : '<p class="mu">This item is unavailable right now.</p>'}</div></div></div>
+ <div class="cols" style="margin-top:36px"><div class="pl"><h3>The Reuse Loop</h3>${journeyHtml(i)}</div><div class="pl"><h3>Details</h3><p>${esc(i.desc)}</p><p class="mu"><b>Included:</b> as described above.<br><b>Safe public pickup:</b> ${esc(i.area || SPOTS[0])}${i.swap ? `<br><b>Open to exchange:</b> yes${i.want ? ', looking for ' + esc(i.want) : ''}` : ''}<br><b>Rules:</b> return on time, in the same condition, confirm via QR.</p></div><div class="pl"><h3>LOOPA Protection</h3><p style="line-height:2;margin:0">✓ Verified community profile<br>✓ In-app communication<br>✓ Exchange confirmation<br>✓ Safe public pickup points<br>✓ Report system</p></div></div>
+ <h3 style="margin:30px 0 12px">Reviews of ${esc(o.name)}</h3><div class="cols">${rv.map(r => `<div class="pl"><b style="color:var(--am)">${stars(r.s)}</b> <b>${esc(usr(r.by).name)}</b><div class="mu">${esc(r.t)}</div></div>`).join('') || '<p class="mu">No reviews yet.</p>'}</div>${own ? '' : `<button class="bad" data-act="report" data-id="${o.id}" style="margin-top:14px">Report ${esc(o.name)}</button>`}</div>`
+            },
+            post() {
+                const T = ['Item', 'Details', 'Availability', 'Preview'], s = P.step;
+                const f = [`<label>Item name<input data-p="n" value="${esc(P.n)}" maxlength="80" required></label><label>Category<select data-p="c">${Object.keys(CATS).map(c => opt(c, c, P.c)).join('')}</select></label><label>Item photo<input id="pi" type="file" accept="image/*"></label>`, `<label>Description<textarea data-p="d" rows="4" maxlength="500">${esc(P.d)}</textarea></label><label>Price per day in ₹ (0 to lend free)<input data-p="p" type="number" min="0" max="100000" value="${P.p}"></label>`, `<label>Availability<select data-p="a">${opt('1', 'Available now', P.a)}${opt('0', 'Not available yet', P.a)}</select></label><label>Safe public pickup point<select data-p="area">${SPOTS.map(x => opt(x, x, P.area)).join('')}</select></label><label style="display:flex;gap:10px;align-items:center"><input type="checkbox" data-p="swap" ${P.swap ? 'checked' : ''} style="width:22px;min-height:22px;margin:0"> Open to item exchange instead of payment</label><label>Looking for in exchange (optional)<input data-p="want" value="${esc(P.want)}" maxlength="80" placeholder="e.g. Engineering textbook"></label>`, `<p class="mu">Review the preview, then publish.</p>`][s];
+                return `<div class="wrap"><h1 style="font-size:clamp(2rem,4vw,3rem)">Give your unused item another life.</h1><div class="pf"><form onsubmit="return false"><div class="stp">${T.map((t, k) => `<div class="${k == s ? 'on' : ''}">0${k + 1} ${t}</div>`).join('')}</div>${f}<div class="err" role="alert" id="pe"></div><div class="acts">${s ? '<button data-act="pback">Back</button>' : ''}${s < 3 ? '<button class="pri" data-act="pnext">Continue</button>' : '<button class="pri" data-act="post">Publish to LOOPA</button>'}</div></form><div><span class="mu">Live preview</span><div id="pv" style="margin-top:8px"></div></div></div></div>`
+            },
+            reqs() {
+                const m = me(), inv = r => r.to === m.id || r.from === m.id, F2 = {in: r => r.to === m.id, out: r => r.from === m.id, act: r => inv(r) && r.st === 'accepted', done: r => inv(r) && r.st === 'returned'}, l = S.reqs.filter(F2[tab]).reverse(), T = [['in', 'Incoming'], ['out', 'Outgoing'], ['act', 'Active rentals'], ['done', 'Completed']];
+                return `<div class="wrap"><h1 style="font-size:clamp(2rem,4vw,3rem)">Requests</h1><div class="chips" style="margin-top:14px">${T.map(([k, v]) => `<button class="${tab === k ? 'on' : ''}" data-act="tab" data-t="${k}">${v}</button>`).join('')}</div><div style="margin-top:10px">${l.map(r => {
+                    const i = itm(r.item), own = r.to === m.id, o = usr(own ? r.from : r.to), active = r.st === 'accepted' && r.handed, lb = active ? 'Active' : r.st[0].toUpperCase() + r.st.slice(1), cls = r.st === 'pending' ? 'wait' : r.st === 'rejected' ? 'no' : active ? 'act' : '';
+                    return `<div class="pl"><div class="row" style="align-items:start"><div style="display:flex;gap:14px;align-items:center"><div style="width:64px">${vis(i).replace('font-size:76px', '')}</div><div><b class="hd" style="font-size:18px">${esc(i.name)}</b><div class="mu">${own ? 'From' : 'To'} ${esc(o.name)} · ${r.days} day${r.days > 1 ? 's' : ''} · ${r.offer && itm(r.offer) ? '⇄ Swap for ' + esc(itm(r.offer).name) : price(i)} · Pickup: ${esc(r.spot || SPOTS[0])}${r.st === 'accepted' ? ` · ${left(r) < 0 ? 'overdue by ' + (-left(r)) + ' day(s)' : 'due in ' + left(r) + ' day(s)'}` : ''}</div></div></div><span class="tag ${cls}">● ${lb}</span></div><div class="acts">
+ ${own && r.st === 'pending' ? `<button class="pri" data-act="accept" data-id="${r.id}">Accept</button><button class="bad" data-act="c-reject" data-id="${r.id}">Decline</button>` : ''}${r.st !== 'rejected' ? `<button data-act="chat" data-id="${r.id}">Message</button>` : ''}${r.st === 'accepted' ? `<button data-act="qr" data-id="${r.id}" data-t="${r.handed ? 'return' : 'handover'}">Secure exchange</button>` : ''}${own && r.st === 'accepted' ? `<button data-act="scan" data-id="${r.id}">${r.handed ? 'Scan code' : 'Confirm handover'}</button><button data-act="c-returned" data-id="${r.id}">Mark returned</button>` : ''}${r.st === 'returned' && !r.rated.includes(m.id) ? `<button class="pri" data-act="rate" data-id="${r.id}">Rate ${esc(o.name)}</button>` : ''}</div></div>`
+                }).join('') || '<p class="mu">Nothing here yet. Explore items and send your first request.</p>'}</div></div>`
+            },
+            qr() {
+                const r = req(cur); if (!r) return views.reqs(); const m = me(), done = qt === 'handover' ? r.handed : r.st === 'returned', own = r.to === m.id, code = `RENTREUSE|${r.id}|${qt}`;
+                return `<div class="wrap ex"><button data-act="nav" data-v="reqs" style="justify-self:start">← Requests</button><h1 style="font-size:clamp(2rem,4vw,3rem);margin-top:16px">Secure exchange</h1><p class="mu">Confirm the ${qt} in seconds.</p><div class="glass"><span class="mu">${qt === 'handover' ? 'Handover' : 'Return'} ID</span><div class="hd" style="font-size:2rem">${rid(r)}</div><div id="qr" data-code="${esc(code)}">${done ? '' : '<i class="scn"></i>'}</div><code style="word-break:break-all;font-size:12px">${esc(code)}</code><p style="font-weight:700;color:${done ? 'var(--ac)' : 'var(--am)'}">${done ? `✓ ${qt === 'handover' ? 'Handover' : 'Return'} verified` : '● Waiting for confirmation'}</p></div><p class="mu" style="max-width:360px">Meet at <b>${esc(r.spot || SPOTS[0])}</b>, a public, staffed pickup point. Avoid meeting in private places.</p><div class="acts" style="justify-content:center"><button class="${qt === 'handover' ? 'pri' : ''}" data-act="qr" data-id="${r.id}" data-t="handover">Handover</button><button class="${qt === 'return' ? 'pri' : ''}" data-act="qr" data-id="${r.id}" data-t="return">Return</button>${own && !done ? `<button data-act="scan" data-id="${r.id}">Confirm with code</button>` : ''}</div></div>`
+            },
+            msgs() {
+                const m = me(), l = S.reqs.filter(r => (r.from === m.id || r.to === m.id) && r.st !== 'rejected'), r = chatId && l.find(x => x.id === chatId), o = r && usr(r.from === m.id ? r.to : r.from);
+                return `<div class="wrap"><h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:18px">Messages</h1><div class="chat"><div class="cl">${l.map(x => {const u = usr(x.from === m.id ? x.to : x.from), lm = x.msgs[x.msgs.length - 1]; return `<button class="${x.id === chatId ? 'on' : ''}" data-act="chat" data-id="${x.id}"><b>${esc(u.name)}</b> · ${esc(itm(x.item).name)}<div class="mu" style="font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(lm ? lm.t : '')}</div></button>`}).join('') || '<p class="mu">No conversations yet. Send a request to start one.</p>'}</div>
+ <div class="pl" style="margin:0">${r ? `<div class="row"><b>Talking about: ${esc(itm(r.item).name)}</b>${AV(o)}</div><p class="mu" style="margin:4px 0 0;font-size:13px">Chats stay inside LOOPA. Don't share phone numbers or pay outside before you meet.</p><div class="msgs" id="ms">${r.msgs.map(x => /^(Request accepted|Handover confirmed)/.test(x.t) ? `<div class="msg sys">✓ ${esc(x.t.split('.')[0].replace(' by QR code', ''))}</div>` : `<div class="msg ${x.u === m.id ? 'me' : ''}"><small>${esc(usr(x.u).name)}</small>${esc(x.t)}</div>`).join('')}</div><div class="row"><input id="ct" placeholder="Write a message" aria-label="Message" maxlength="500"><button class="pri" data-act="send">Send</button></div>` : '<p class="mu">Select a conversation.</p>'}</div></div></div>`
+            },
+            profile() {
+                const m = me(), posted = S.items.filter(i => i.owner === m.id), bor = S.reqs.filter(r => r.from === m.id && ['accepted', 'returned'].includes(r.st)), rv = S.reviews.filter(r => r.about === m.id), ex = S.reqs.filter(r => (r.to === m.id || r.from === m.id) && r.st === 'returned').length, saved = bor.reduce((a, r) => a + (itm(r.item).price ? itm(r.item).price * r.days * 3 : 150), 0), t = trust(m.id);
+                return `<div class="wrap"><div class="pl" style="display:flex;gap:28px;align-items:center;flex-wrap:wrap">${ringSvg(t)}<div>${AV(m, 'l')}</div><div><h1 style="font-size:2.2rem">${esc(m.name)}</h1>${vTag(m)}<p class="mu" style="margin:8px 0">Community reputation <b style="color:var(--am)">${stars(rating(m.id))}</b> ${rating(m.id) ? rating(m.id).toFixed(1) : ''}</p><div class="acts">${m.v ? '' : '<button class="pri" data-act="verify">Verify my account (demo)</button>'}<button data-act="logout">Switch user</button></div></div></div>
+ <div class="stats" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">${[[posted.length, 'Items shared'], [bor.length, 'Items borrowed'], [ex, 'Successful exchanges'], [rv.length, 'Reviews']].map(x => `<div class="pl" style="margin:0">${N(x[0]).replace('<b', '<b class="hd" style="font-size:2rem"')}<div class="mu">${x[1]}</div></div>`).join('')}</div>
+ <section class="dark rv" style="margin-top:28px"><h2>Your LOOPA impact</h2><div class="stats"><div>${N(bor.length + posted.length)}<span class="mu">items reused</span></div><div>${N(ex)}<span class="mu">successful exchanges</span></div><div>${N(Math.round(bor.length * 2.5), ' kg')}<span class="mu">est. material/CO₂ avoided</span></div><div>${N(saved, '')}<span class="mu">est. ₹ saved</span></div></div><div class="jr" style="margin-top:20px">${['Bought less', 'Shared more', 'Saved money', 'Reduced waste'].map((x, k) => (k ? '<i>→</i>' : '') + `<span>${x}</span>`).join('')}</div></section>
+ <h2 style="margin:36px 0 16px">Recent reviews</h2><div class="cols">${rv.map(r => `<div class="pl"><b style="color:var(--am)">${stars(r.s)}</b> <b>${esc(usr(r.by).name)}</b><div class="mu">${esc(r.t)}</div></div>`).join('') || '<p class="mu">No reviews yet.</p>'}</div>
+ <h2 style="margin:36px 0 16px">Items I shared</h2><div class="grid">${posted.map(card).join('') || '<p class="mu">Nothing shared yet.</p>'}</div>
+ <h2 style="margin:36px 0 16px">Items I borrowed</h2>${bor.map(r => `<div class="pl row">${esc(itm(r.item).name)} from ${esc(usr(r.to).name)}<span class="tag">${r.st}</span></div>`).join('') || '<p class="mu">Nothing yet.</p>'}</div>`
+            }
+        };
+        const NAV = [['home', 'Home', 'h'], ['browse', 'Discover', 'd'], ['reqs', 'Requests', 'r'], ['msgs', 'Messages', 'm'], ['profile', 'Profile', 'u']];
+        function render() {
+            if (!S.me) return login();
+            const m = me(), pend = S.reqs.filter(r => r.to === m.id && r.st === 'pending').length, top = [['browse', 'Discover'], ['home', 'How it works'], ['post', 'Share an item'], ['profile', 'Community']];
+            $('#app').innerHTML = `<header><div class="wrap"><button class="logo" data-act="nav" data-v="home" aria-label="LOOPA home">${mark}LOOPA</button><nav aria-label="Main">${top.map(([v, l], k) => `<button class="${view === v && k != 1 ? 'on' : ''}" data-act="${k == 1 ? 'how' : 'nav'}" data-v="${v}">${l}</button>`).join('')}</nav><span style="flex:1" class="mobsp"></span><button class="ib" data-act="nav" data-v="browse" aria-label="Search">${I('s')}</button><button class="ib" data-act="nav" data-v="reqs" aria-label="Notifications, ${pend} pending">${I('b')}${pend ? `<span class="dot">${pend}</span>` : ''}</button><button class="ib" data-act="theme" aria-label="Toggle dark mode">${I('t')}</button><button class="ib" data-act="nav" data-v="profile" aria-label="Profile" style="border:0;background:none">${AV(m)}</button><button class="pri cta" data-act="nav" data-v="post">+ Share an item</button></div></header><main>${views[view]()}</main><nav class="bn" aria-label="Mobile">${NAV.map(([v, l, i]) => `<button class="${view === v ? 'on' : ''}" data-act="nav" data-v="${v}" aria-label="${l}">${I(i, 22)}${l}${v === 'reqs' && pend ? ` (${pend})` : ''}</button>`).join('')}</nav>`;
+            after()
+        }
+        let io, cio;
+        function after() {
+            if (view === 'browse') {const g = $('#grid'); g.innerHTML = '<div class="sk"></div><div class="sk"></div><div class="sk"></div>'; setTimeout(() => {if (view === 'browse') {grid(); observe()} }, 220)}
+            if (view === 'post') prev();
+            if (view === 'qr' && window.QRCode) {const q = $('#qr'); new QRCode(q, {text: q.dataset.code, width: 180, height: 180})} else if (view === 'qr') $('#qr').insertAdjacentText('afterbegin', 'QR library unavailable');
+            if (view === 'msgs') {const ms = $('#ms'); if (ms) ms.scrollTop = ms.scrollHeight; if (chatId && F.focusChat) {$('#ct').focus(); F.focusChat = 0} }
+            observe()
+        }
+        function observe() {
+            const rm = matchMedia('(prefers-reduced-motion:reduce)').matches;
+            io = io || new IntersectionObserver(es => es.forEach(e => {if (e.isIntersecting) {e.target.classList.add('in'); io.unobserve(e.target)} }), {threshold: .1});
+            cio = cio || new IntersectionObserver(es => es.forEach(e => {if (!e.isIntersecting) return; cio.unobserve(e.target); const t = e.target, n = +t.dataset.n, s = t.dataset.s || '', d = rm ? 0 : 1100, t0 = performance.now(); (function f(now) {const k = d ? Math.min(1, (now - t0) / d) : 1; t.textContent = Math.round(n * (1 - Math.pow(1 - k, 3))).toLocaleString('en-IN') + s; if (k < 1) requestAnimationFrame(f)})(t0)}), {threshold: .4});
+            $$('.rv:not(.in)').forEach(x => io.observe(x)); $$('[data-n]').forEach(x => cio.observe(x));
+            requestAnimationFrame(() => $$('.rg').forEach(c => c.style.strokeDashoffset = 327 * (1 - c.dataset.t / 100)))
+        }
+        function grid() {
+            let l = S.items.filter(i => (!F.q || (i.name + i.desc).toLowerCase().includes(F.q.toLowerCase())) && (!F.cat || i.cat === F.cat) && (F.max === '' || (F.max === 'swap' ? !!i.swap : i.price <= +F.max)) && (!F.av || (F.av === '1') === !!i.avail) && (!F.km || i.dist <= +F.km) && (!F.rt || rating(i.owner) >= +F.rt));
+            if (F.sort === 'near') l.sort((a, b) => a.dist - b.dist); else l.reverse();
+            $('#grid').innerHTML = l.map(card).join('') || '<p class="mu">No items match. Try clearing a filter.</p>'; observe()
+        }
+        function prev() {const el = $('#pv'); if (!el) return; const i = {id: 'x', name: P.n || 'Your item name', cat: P.c, desc: P.d, price: Math.max(0, +P.p || 0), avail: +P.a, photo: P.photo || CATS[P.c], owner: S.me, dist: 0}; el.innerHTML = card(i).replace('rv', 'rv in').replace('data-act="open"', '')}
+        function openScan(id) {modal(`<h3>Confirm with a code</h3><p class="mu">Ask the borrower to show their QR code, then type the code printed under it. Handover and return codes are checked automatically.</p><input id="sc" placeholder="RENTREUSE|..." aria-label="Code"><div class="acts"><button class="pri" data-act="checkscan" data-id="${id}">Confirm</button><button data-act="close">Cancel</button></div>`)}
+        function openRate(id) {modal(`<h3>Rate this exchange</h3><label>Stars<select id="rs">${[5, 4, 3, 2, 1].map(n => `<option value="${n}">${'★'.repeat(n)}</option>`).join('')}</select></label><label>Review<textarea id="rt" rows="3" maxlength="300" placeholder="How did it go?"></textarea></label><div class="acts"><button class="pri" data-act="submitrate" data-id="${id}">Submit review</button><button data-act="close">Cancel</button></div>`)}
+        function openReport(uid) {modal(`<h3>Report ${esc(usr(uid).name)}</h3><label>Reason<select id="rr"><option>Item not as described</option><option>Didn't return the item</option><option>Unsafe or rude behaviour</option><option>Fake listing</option></select></label><div class="acts"><button class="bad" data-act="submitreport" data-id="${uid}">Send report</button><button data-act="close">Cancel</button></div>`)}
+        function startChat(i) {const m = me(); let r = S.reqs.find(x => x.item === i.id && x.from === m.id && x.st !== 'rejected' && x.st !== 'returned'); if (!r) {r = {id: 'r' + Date.now(), item: i.id, from: m.id, to: i.owner, days: 0, st: 'inquiry', msgs: [], rated: []};} return r}
+        document.addEventListener('click', e => {
+            const a = e.target.closest('[data-act]'); if (!a) return; const d = a.dataset; if (d.act === 'ovc' && e.target !== a) return;
+            const m = S.me ? me() : null, top = () => window.scrollTo(0, 0);
+            switch (d.act) {
+                case 'ovc': case 'close': closeM(); return;
+                case 'theme': {const dk = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim().toLowerCase() === '#0b1411'; theme = dk ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; try {localStorage.setItem('loopa_theme', theme)} catch (x) { } return }
+                case 'how': view = 'home'; render(); setTimeout(() => {const h = $('#how'); h && h.scrollIntoView({behavior: 'smooth'})}, 50); return;
+                case 'login': S.me = d.id; view = 'home'; break;
+                case 'newuser': {const n = $('#nn').value.trim().slice(0, 40); if (!n) return toast('Enter your name first.'); const id = 'u' + Date.now(); S.users.push({id, name: n, v: 0, done: 0}); S.me = id; view = 'home'; break}
+                case 'logout': S.me = null; break;
+                case 'nav': view = d.v; top(); break;
+                case 'cat': F = {q: '', cat: d.c, max: '', av: '', sort: '', km: '', rt: ''}; view = 'browse'; top(); break;
+                case 'fc': F.cat = d.c; break;
+                case 'tab': tab = d.t; break;
+                case 'open': cur = d.id; view = 'item'; top(); break;
+                case 'toggle': {const i = itm(d.id); i.avail = i.avail ? 0 : 1; toast('Listing updated'); break}
+                case 'ask': {const i = itm(d.id), r = S.reqs.find(x => x.item === i.id && x.from === m.id && ['pending', 'accepted'].includes(x.st)); if (r) {chatId = r.id; view = 'msgs'; F.focusChat = 1; break} toast('Send a request first, then you can message the owner here.'); return }
+                case 'request': {
+                    const i = itm(d.id), n = Math.max(1, Math.min(30, +$('#days').value || 1)), sp = $('#spot').value, of = $('#offer') ? $('#offer').value : '', oi = of && itm(of);
+                    if (!SPOTS.includes(sp)) return toast('Choose a safe pickup point.'); if (of && (!oi || oi.owner !== m.id || !oi.avail)) return toast('That item is not available to offer.');
+                    S.reqs.push({id: 'r' + Date.now(), item: i.id, from: m.id, to: i.owner, days: n, st: 'pending', spot: sp, offer: oi ? oi.id : '', msgs: [{u: m.id, t: oi ? `Hi! Would you swap "${i.name}" for my "${oi.name}" for ${n} day(s)? Pickup at ${sp}.` : `Hi! Could I ${i.price ? 'rent' : 'borrow'} "${i.name}" for ${n} day(s)? Pickup at ${sp}.`}], rated: []}); toast('Request sent to ' + usr(i.owner).name); view = 'reqs'; tab = 'out'; top(); break
+                }
+                case 'accept': {const r = req(d.id); if (r.offer && !itm(r.offer).avail) return toast('The offered item is no longer available.'); r.st = 'accepted'; r.due = Date.now() + r.days * DAY; itm(r.item).avail = 0; if (r.offer) itm(r.offer).avail = 0; r.msgs.push({u: m.id, t: 'Request accepted. Let\'s arrange the handover here.'}); r.msgs.push({u: m.id, t: 'Pickup point: ' + (r.spot || SPOTS[0]) + '. Please meet there.'}); toast('Request accepted'); break}
+                case 'c-reject': conf('Decline this request?', 'The requester will be notified. This can\'t be undone.', 'reject', d.id, 'Decline'); return;
+                case 'reject': {req(d.id).st = 'rejected'; closeM(); toast('Request declined'); break}
+                case 'c-returned': conf('Mark as returned?', 'Confirm you have the item back. This makes it available again.', 'returned', d.id, 'Mark returned'); return;
+                case 'returned': {doReturn(req(d.id)); closeM(); toast('Marked as returned. You can now rate each other.'); break}
+                case 'chat': chatId = d.id; view = 'msgs'; F.focusChat = 1; top(); break;
+                case 'send': {const t = $('#ct').value.trim(); if (!t) return toast('Type a message first.'); req(chatId).msgs.push({u: m.id, t: t.slice(0, 500)}); F.focusChat = 1; break}
+                case 'qr': cur = d.id; qt = d.t || 'handover'; view = 'qr'; top(); break;
+                case 'scan': openScan(d.id); return;
+                case 'checkscan': {const r = req(d.id), c = $('#sc').value.trim(); if (c === `RENTREUSE|${r.id}|handover`) {r.handed = 1; r.msgs.push({u: m.id, t: 'Handover confirmed by QR code.'}); closeM(); toast('✓ Handover verified'); break} if (c === `RENTREUSE|${r.id}|return` && r.st === 'accepted') {doReturn(r); closeM(); toast('✓ Return verified. You can now rate each other.'); break} return toast('That code does not match this request.')}
+                case 'rate': openRate(d.id); return;
+                case 'submitrate': {const r = req(d.id), other = r.from === m.id ? r.to : r.from; S.reviews.push({about: other, by: m.id, s: +$('#rs').value, t: $('#rt').value.trim().slice(0, 300) || 'No comment.'}); r.rated.push(m.id); closeM(); toast('Thanks for your review'); break}
+                case 'report': openReport(d.id); return;
+                case 'submitreport': S.reports.push({about: d.id, by: m.id, why: $('#rr').value, at: Date.now()}); closeM(); toast('Report sent. We will review it.'); break;
+                case 'verify': usr(m.id).v = 1; toast('Verified (demo only, no real ID check)'); break;
+                case 'pnext': {const er = $('#pe'); if (P.step === 0 && !P.n.trim()) {er.textContent = 'Give your item a name to continue.'; $('[data-p=n]').focus(); return } if (P.step === 1 && (isNaN(+P.p) || +P.p < 0)) {er.textContent = 'Price must be 0 or more.'; return } P.step++; break}
+                case 'pback': P.step--; break;
+                case 'post': {
+                    const n = P.n.trim(); if (!n) {P.step = 0; render(); return toast('Give your item a name.')}
+                    S.items.push({id: 'i' + Date.now(), name: n.slice(0, 80), cat: P.c, desc: P.d.trim() || 'No description.', price: Math.max(0, +P.p || 0), avail: +P.a, photo: P.photo || CATS[P.c], owner: m.id, area: SPOTS.includes(P.area) ? P.area : SPOTS[0], swap: P.swap ? 1 : 0, want: P.want.trim().slice(0, 80), dist: Math.round((Math.random() * 4 + .3) * 10) / 10});
+                    P = P0(); toast('Published to LOOPA'); view = 'browse'; F = {q: '', cat: '', max: '', av: '', sort: '', km: '', rt: ''}; top(); break
+                }
+                default: return
+            }
+            save(); render()
+        });
+        document.addEventListener('input', e => {const t = e.target, f = t.dataset.f, p = t.dataset.p; if (f) {F[f] = t.value; grid()} if (p) {P[p] = t.type === 'checkbox' ? (t.checked ? 1 : 0) : t.value; $('#pe') && ($('#pe').textContent = ''); prev()} });
+        document.addEventListener('keydown', e => {if (e.key === 'Escape' && $('#modal').innerHTML) closeM(); if (e.key === 'Enter' && e.target.id === 'ct') document.querySelector('[data-act=send]').click(); if (e.key === 'Enter' && e.target.classList.contains('item')) e.target.click()});
+        document.addEventListener('change', e => {
+            if (e.target.id !== 'pi' || !e.target.files[0]) return;
+            const fr = new FileReader(); fr.onload = () => {const im = new Image(); im.onload = () => {const c = document.createElement('canvas'), k = Math.min(1, 600 / im.width); c.width = im.width * k; c.height = im.height * k; c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); P.photo = c.toDataURL('image/jpeg', .75); prev(); toast('Photo added')}; im.onerror = () => toast('That file could not be read as an image.'); im.src = fr.result}; fr.readAsDataURL(e.target.files[0])
+        });
+        render();
+    </script>
+</body>
+
+</html>
